@@ -1,0 +1,150 @@
+school.x,year,entity1,entity2,entity3,entity4,increment1,increment2,increment3,increment4,ltss1,ltss2r,ltss3,dircheck1,ltss4r,lti1r,dircheck2,lti2,lti3r,ladder,income,gender,anagramwords,correctwords,totalwords,collegetype
+thomas nelson community college,2,NA,NA,NA,NA,4,4,4,4,4,5,4,5,5,5,4,5,5,6,1,1,"car, Carl, crack, leg, rack, ",4,6,community
+Florida A & M University,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Ogeeche Tech,1,1,1,1,3,NA,NA,NA,NA,4,1,4,NA,5,1,NA,7,1,9,1,2,"care, keg, rake, large, cake, lake, crage, lace, gal, lag, leg, are, grace, rage, age, ",14,16,community
+Burlington County College,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,community
+santa fe community college,3,NA,NA,NA,NA,4,5,5,2,5,7,5,NA,2,4,2,5,3,8,2,1,"keg, car, ace, are, cel, reg, lar, gel, ear, age",10,10,community
+Temple University,3,2,2,2,2,NA,NA,NA,NA,6,2,6,NA,2,2,NA,6,2,6,4,1,"Car, Keg, ",2,3,public
+Mid-Plains Community College,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,community
+Arizona State University,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Chicago State University,4,4,2,5,4,NA,NA,NA,NA,5,6,4,NA,5,5,NA,2,7,6,4,1,"leg, rake, leak, cake, keg, ale, race, lace, lake, rag, are, ",11,12,public
+Brandeis University,4,1,1,1,1,NA,NA,NA,NA,6,2,6,NA,2,2,NA,5,4,6,8,2,"car, care, real, crag, are, lark, arc, kale, gale, gel, ear, ace, race, lace, gear, rake, lake, cake, lea, rack, lack",21,21,private
+Georgia Institute of Technology,4,NA,NA,NA,NA,6,5,6,6,6,2,7,NA,2,2,NA,5,3,7,1,2,"car, lake, gear, clear, leg, keg, cake, rag, lag, rake, care, real, are, rack, lack, large",16,16,public
+University of South Alabama,1,4,4,4,3,NA,NA,NA,NA,3,5,3,NA,5,5,NA,3,5,9,1,2,"cake, grace, rake, lake, creak, leak, real, rage, lack, race, gear, cage, care, ",13,14,public
+University of Alabama Birmingham,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Johnson & Wales University,2,NA,NA,NA,NA,5,3,4,4,5,3,6,NA,3,2,NA,6,2,6,5,2,"lack, car, gear, care, gel, lake, leak, kale, gale, lace, cake, cal, rack, arc, race, gar, rage, cage, crag, ",18,20,private
+Albright College,4,2,2,1,2,NA,NA,NA,NA,7,2,6,NA,2,3,NA,5,7,7,1,1,"Lake, Clare, Rage, Rag, Lag, Large, Care, Rae, Keg, Gear, Ear, Are, Gar, ",11,14,private
+University of Phoenix,4,4,4,4,4,NA,NA,NA,NA,NA,5,5,NA,4,2,NA,5,5,7,1,2,"Grackle, Crag, Elk, Calk, Lack, Rack, Leg, Gel, creak, ",9,10,public
+Emory University,4,3,3,3,3,NA,NA,NA,NA,3,5,5,NA,3,3,NA,5,2,8,1,2,"kale, ear, lear, gear, cage, gale, race, gar, car, leak, crag, ace, lace, lake, large, rake, cake, grace, rag, are, age, ale, rae, erk, ",22,25,private
+University of Florida,3,NA,NA,NA,NA,3,5,5,5,6,2,5,NA,2,3,NA,6,2,6,2,2,"Car, Keg, Leg, Rag, Lag, Are, Kale, Rake, Cake, Lake, Care, Ear, ",12,13,public
+California Baptist University,3,1,1,1,1,NA,NA,NA,NA,6,2,6,NA,2,2,NA,6,2,4,5,1,"RACE, LACE, CAR, GRACE, LAKE, CAKE",6,6,private
+Berkshire Community College,2,NA,NA,NA,NA,3,3,4,2,3,4,3,NA,5,3,NA,4,3,8,1,2,"creak, clear, car, care, rake, cake, gear, real, keg, rage, rag, rack, arc, ark, agr, ace, ale, leak, Lear, lake, ",19,21,community
+Northern Kentucky University,3,3,4,2,2,NA,NA,NA,NA,4,2,3,NA,4,2,NA,2,6,6,3,2,"Car, care, cake, creak, leak, real, rage, cage, age, are, ack, rack, lack, lake, grace, race, lace, ace, ale, ",18,20,public
+Ashworth,1,3,3,3,3,NA,NA,NA,NA,4,4,4,NA,4,4,NA,4,4,6,1,2,"leak, lag, lack, rack, rake, lake, lace, race, case, large, lark, car, gear, age, rage, ace",15,16,private
+None. ,7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,
+university of south carolina,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Binghamton University,3,NA,NA,NA,NA,4,4,5,4,5,2,5,NA,2,3,NA,5,3,7,5,1,"creak, leak, crag, lake, race, rake, gal, kale, gale, lace, lag, car, care, real, regal, ale, reg, keg, leg, gel, rag, ",21,22,public
+Everest ,2,5,2,2,5,NA,NA,NA,NA,6,2,4,NA,4,4,NA,5,4,3,4,2,"Keg, lake, rake, rag, arc, car, ear, ",7,8,private
+Suffolk County Community College,2,2,2,1,2,NA,NA,NA,NA,6,2,6,NA,2,3,NA,5,5,5,7,2,"rag, rake, kale, lag, are, car, ark",7,7,community
+Rutgers,1,3,2,3,2,NA,NA,NA,NA,6,5,5,NA,4,3,NA,5,4,4,4,1,"Cake, Lake, Rake, Creak, Leak, Lear, Car, Keg, Gal, Leg",10,10,public
+,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,
+University of Utah,3,NA,NA,NA,NA,4,4,3,3,4,3,5,NA,3,3,NA,5,3,8,2,1,"leg, cage, rage, keg, age, real, rag, arc, car, leak, ale, lag, crag, lake, rake, cake",16,16,public
+Cal State Unibersity of Bakersfiels (CSUB),3,3,4,2,2,NA,NA,NA,NA,4,5,4,NA,5,5,NA,4,4,6,6,1,"rack, car, keg, ace, grace, race, lace, gale, arc, leak, real, ",11,12,public
+UC Santa Barbara,3,NA,NA,NA,NA,4,4,4,4,5,2,5,NA,2,4,NA,5,6,5,5,1,"rake, rag, car, gear, lake, cake, ear, kale, earl, leak",10,10,public
+auburn,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Forham,2,4,2,2,4,NA,NA,NA,NA,4,4,4,NA,4,4,NA,4,4,8,1,2,"grackle, lack, leak, cake, lake, gale, lag, leg, keg, car, care, real, rag, rage, race, gel, arc, ace, lark, ark, gear, are, ",22,23,private
+IUPUI,3,NA,NA,NA,NA,5,5,5,5,6,3,5,NA,3,7,NA,4,4,9,1,2,"Lake, Car, Rake, Rage, Ear, Care, Cage, Real, Lear, ",9,10,public
+kc,1,3,5,3,5,NA,NA,NA,NA,4,6,4,2,3,4,4,2,6,4,2,1,raechelkg,0,1,public
+Tacoma Community College,3,NA,NA,NA,NA,5,4,4,5,6,2,5,NA,2,1,NA,7,1,5,3,1,"KEG, CAR, LEG, EAR, GLARE, RACE, GAL, CLEAR, RAG, CREAK, RAKE",11,11,community
+Hamline University,4,2,2,2,2,NA,NA,NA,NA,6,2,6,NA,2,1,NA,7,1,7,4,1,"keg, leg, are, lake, cake, rake, gale, kale, leak, crag, lag, rag, creak, real, ",14,15,private
+University of St. Francis,4,NA,NA,NA,NA,4,5,6,6,7,2,6,NA,1,1,NA,7,6,5,6,1,"lake, rake, gale, gel, gal, car, carl, care, lag, gar, leg, keg, cake, caker, laker, race, raker, reak, kale, ",16,20,private
+Central Michigan University,4,2,1,1,3,NA,NA,NA,NA,6,2,6,NA,2,5,NA,2,5,8,5,2,"Race, Rage, Rake, Ear, Car, Keg, Are, Care, Age, Cage, Leg",11,11,public
+Salisbury University ,4,NA,NA,NA,NA,2,1,2,2,2,6,2,NA,2,6,NA,2,6,5,3,1,"Eak, car, keg, gel, ear, age, rage, kale, lake, leak, gear, cage, cake, lear, carl, earl, ekg",15,17,public
+"California State University, Sacramento",2,NA,NA,NA,NA,4,6,4,3,5,4,4,NA,3,5,5,6,4,7,1,2,"Creak, Leg, Real, Leak, Keg, ",5,6,public
+San Diego City College,6,1,1,1,1,NA,NA,NA,NA,5,2,5,NA,2,6,NA,2,6,9,1,2,"care, race, acre, are, keg, real, rage, glare, car, gar, rag, ace, glace, regal, gale, leg, lake, rake, ear, era, lea, ale, arc, age, ",24,25,community
+mt. sac,2,NA,NA,NA,NA,2,1,2,2,5,3,5,NA,3,5,NA,3,5,6,3,1,"crag, leg, race, keg, gear, lack, ace, are, ale, gale, ear, earl, rack, lark, carl, cake, care, regal",18,18,community
+uc davis,3,NA,NA,NA,NA,5,5,4,4,4,5,3,NA,5,6,NA,3,5,5,3,1,"lake, lare, gale, race, rale, rake, rage, ear, gear, lear, reak, gar, cage, ",11,14,public
+Modesto Junior college,2,NA,NA,NA,NA,2,1,1,1,2,6,1,NA,7,2,NA,3,3,5,1,2,"leak, cage, lake, rake, gale, kale, crag, rack, large, creak, gear, cake, ",12,13,community
+University of Texas at Austin,4,4,4,4,4,NA,NA,NA,NA,4,5,4,3,5,5,4,2,6,4,8,2,"rake, keg, lake, cake, gale, kale",6,6,public
+Santa Ana College,2,2,3,4,4,NA,NA,NA,NA,4,3,4,NA,4,4,NA,4,6,5,3,1,"large, rake, gel, gal, lark, cake, elk, leg, rag, lake, lace, care, ",12,13,community
+snhu,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,private
+Golden West College,3,1,1,1,1,NA,NA,NA,NA,4,5,3,6,5,3,6,5,5,9,2,2,"Lark, Rack, Crae, ",2,4,community
+Southeastern Oklahoma State University,4,2,2,2,3,NA,NA,NA,NA,5,2,5,NA,2,2,NA,7,2,5,3,1,"lake, gale, rake, kale, rack, lack, era, keg, leg, gel, race, car, crag, ",13,14,public
+Winona State University - Rochester,4,NA,NA,NA,NA,4,4,3,4,4,3,5,3,2,5,NA,3,6,8,1,1,"lake, take, rag, lag, krg, gal, care, race, cake, gel, leg, ear, earl, acre, lace, carl, age, rage, cage, ale, grace, ",19,22,public
+Florida International University,3,3,3,3,3,NA,NA,NA,NA,6,4,5,NA,4,6,NA,5,5,8,1,1,"leak, rake, lag, lack, rag, cag, lake, are, kale, ale, ",9,11,public
+Wittenberg University,1,NA,NA,NA,NA,5,6,6,5,6,1,7,NA,1,6,NA,2,7,7,7,1,"Creak, Leak, Cake, Leg, Rag, Rake, Ale, Car, Gear, Keg, Kale, Glare, ",12,13,private
+University of Washington,5,3,3,2,1,NA,NA,NA,NA,3,5,4,NA,5,5,NA,3,5,8,1,2,"leg, rag, ark, ace, kale, grace, lake, rake, cake, gear, ",10,11,public
+East Carolina University,4,NA,NA,NA,NA,4,4,4,4,5,3,5,NA,3,3,NA,5,3,7,3,1,"lake, keg, lace, rake, care, car, rag, cake, lag, rage, gar, real, leg, race, lack, lea, kale",17,17,public
+Grand Valley State University,4,NA,NA,NA,NA,5,4,5,5,6,5,6,6,5,6,NA,5,6,7,3,1,"race, lake, keg, lag, rake, rag, lace, ",7,8,public
+Hunter College (CUNY Hunter),2,4,3,4,4,NA,NA,NA,NA,3,5,3,NA,5,6,NA,2,6,6,5,2,"CAKE, EAR, RAKE, LAKE, GLARE",5,5,public
+University of Phoenix,6,NA,NA,NA,NA,3,5,2,2,3,6,2,NA,6,7,NA,1,7,7,2,1,"race, lake, rag, keg, leg, rake, are, rare, rear, ace, care, gear, arc, ark, rack, cake, leak, ",15,18,public
+umd,4,3,3,3,4,NA,NA,NA,NA,4,4,4,4,4,4,4,4,4,6,4,2,"keg, gel, lace, era, ear, lark, race, car, ale, lake, rag, kale, karl",12,13,public
+Utah State University,5,2,2,1,1,NA,NA,NA,NA,5,5,5,NA,5,5,NA,5,5,5,2,2,"rag, gear, are, ear, era, rake, rage, age, keg, leg, gel, real, ale, lea, cage, gal, lag, leak, reak, rack, lack, lear, clear, glare",23,24,public
+Pitt,2,NA,NA,NA,NA,5,3,4,4,5,4,5,NA,3,5,NA,3,5,4,5,1,"Lake, Rake, car, ear, ",4,5,public
+Southwestern College,2,2,2,2,2,NA,NA,NA,NA,5,3,5,NA,2,5,NA,3,6,8,5,1,"rack, crag, lack, elk, rake, earl, regal, leak, car, rag, gar, ",11,12,community
+Winthrop University,3,NA,NA,NA,NA,5,3,4,3,5,2,4,NA,3,3,NA,4,4,7,2,1,"Ear, Creak, Reak, Car, Rag, Gal, Lag, Rake, Gear, Gel, Lake",10,11,public
+U of Maryland- College Park,5,4,4,4,4,NA,NA,NA,NA,3,5,5,NA,5,5,NA,2,5,5,4,1,"rack, cage, lake, lark, keg, car, ",6,7,public
+Winona State University,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Columbia College Chicago,3,NA,NA,NA,NA,3,3,3,3,5,3,5,NA,3,3,NA,5,3,8,3,2,"car, lake, gal, cake, rake, gear, are, rag, ear, kale, leak, cage, rage, leg, lag, keg, ",16,17,private
+Clemson University,2,NA,NA,NA,NA,3,2,3,3,5,3,4,NA,4,5,NA,3,3,3,6,1,"leg, rag, car, creak, glare, kale, gale, leak, rake, cake, lake, keg, rage, race, rack, lace, ",16,17,public
+West Chester University,4,5,4,5,5,NA,NA,NA,NA,2,6,3,NA,7,6,NA,3,6,4,8,2,"cake, lake, laker, care, arc, lace, ace, gear, gel, leg, lear, ear, rag, rage, real, rake, gal, gale, ale, reg, leak, lacer",22,22,public
+Sam Houston State University,4,3,4,3,3,NA,NA,NA,NA,4,3,5,NA,6,1,NA,4,4,8,1,2,"keg, rag, car, ",3,4,public
+UVA,4,4,4,5,5,NA,NA,NA,NA,3,5,5,NA,6,7,NA,3,7,6,5,2,"gale, crag, lake, rake, cake, kale, car, ear, care, lack, rack, lace, race, arc, ace, lag, leg, keg, rage, cage, gear, ",21,22,public
+University of Texas at Dallas,4,3,3,4,4,NA,NA,NA,NA,2,3,1,NA,5,1,NA,6,2,7,1,1,"care, car, lake, gale, kale, lag, gal, keg, rag, rack, leg, large, lark, crag, creak, race, cake, age, ",18,19,public
+Barton college,2,NA,NA,NA,NA,4,6,3,4,5,3,6,NA,4,2,NA,7,3,5,3,2,"leg, keg, age, rag, gal, ace, elk, arc, gel, ear",10,10,private
+Penn State,1,NA,NA,NA,NA,4,4,4,5,5,3,5,NA,3,2,NA,5,2,7,2,1,"Clerk, Lack, Care, Cage, Elk, Rake, Age, Real, Gel, Leg, Rag",11,11,public
+,7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,
+UCLA,5,NA,NA,NA,NA,3,2,2,5,2,6,2,NA,4,3,NA,4,3,7,2,1,"race, lake, care, rag, ark, cage, lace, gear, earl, ear",10,10,public
+Ashworth College,1,NA,NA,NA,NA,6,6,6,6,7,1,7,NA,1,1,NA,7,1,6,2,2,"creak, leak, lag, gare, gale, kel, race, rag, kale, rake, rale, keg, gear, are, ale, ack, ace, age, car, care, cake, real, ",19,23,private
+none,7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,
+Ball State University,3,2,2,1,4,NA,NA,NA,NA,2,5,3,NA,6,6,NA,2,6,7,2,1,"rake, cake, keg, leg, crag, real, ",6,7,public
+kansas,2,5,2,2,2,NA,NA,NA,NA,3,2,6,NA,3,5,5,4,5,8,3,1,"rake, car, rag, lake, cake, care, leak, gear, ",8,9,public
+penn state ,1,4,5,3,2,NA,NA,NA,NA,4,2,6,NA,5,3,NA,4,5,7,4,1,"lake, cage, cake, rake, rage, race, lear, car, rag, ",9,10,public
+lee university,4,NA,NA,NA,NA,5,5,5,5,6,2,6,NA,2,2,NA,6,2,7,3,1,"care, car, cake, rake, gear, lake, lark, acre, leak, are, era, ark, lace, race, rage, ear, earl, age",18,18,private
+University of Virginia,2,NA,NA,NA,NA,6,4,5,5,6,2,6,NA,2,3,NA,5,4,7,2,2,"keg, leg, lake, cake, rake, are, care, leak, ace, race, grace",11,11,public
+University of Tennessee at Martin,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Hunter College,2,1,3,2,2,NA,NA,NA,NA,3,5,4,NA,5,3,NA,5,3,7,3,1,"Lake, Keg, Rag, Rake, Car, ",5,6,public
+University of Arizona,4,3,2,2,2,NA,NA,NA,NA,5,2,6,NA,2,6,NA,2,6,4,7,1,"lake, creak, glare, recal, regal, large, acre, cake, care, lear, leak, race, reck, lark, lcak, gear",14,16,public
+University of Connecticut,4,3,2,3,5,NA,NA,NA,NA,3,4,4,NA,3,5,NA,3,5,8,1,2,"LEAK, GRACE, ACE, LACE, KALE, GEAR, LARGE, CAGE, AGE, RAGE, RAKE, LAKE, CAKE, EAR, CAR, CARE, GALE, ALE, LAG, RAG, ",20,21,public
+Cogswell Polytechnical,5,NA,NA,NA,NA,5,5,5,4,5,4,NA,NA,6,1,NA,7,1,4,7,1,"lag, ",1,2,private
+Washington University in St Louis,5,4,3,3,4,NA,NA,NA,NA,5,6,5,NA,5,6,NA,4,6,4,2,1,"Lake, creak, lag, rake, reak, cake, rale, race, keg, rag, leg, car, care, kale, ",13,15,public
+University of Washington,4,NA,NA,NA,NA,4,4,5,5,6,3,5,NA,4,4,NA,4,3,5,5,2,"rag, rage, lake, care, car, lag, lack, cake, leg, keg, crag, ",11,12,public
+Penn State,2,NA,NA,NA,NA,6,2,5,5,6,2,6,NA,2,2,NA,6,2,3,8,2,"rake, race, car, rag, keg, arc, lack, large",8,8,public
+university of maine,2,NA,NA,NA,NA,3,4,6,6,5,2,7,NA,2,2,NA,5,2,6,2,1,"rag, rake, keg, leg, kale, lack",6,6,public
+University of Utah,3,2,1,1,3,NA,NA,NA,NA,5,3,6,NA,1,2,NA,6,2,5,8,2,"rack, car, are, real, gal, gale, care, kale, ale, leak, lake, lag, rake, crag, rag, cage, age, ",17,18,public
+UNLV,6,NA,NA,NA,NA,4,3,3,3,4,5,3,NA,5,6,NA,3,6,8,2,2,"race, cake, rake, lake, leak, gear, rear, care, rare, race, lace, leg, keg, ",10,14,public
+St. John's University,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,private
+University of New Meixco,3,3,3,3,3,NA,NA,NA,NA,7,1,7,NA,1,1,NA,7,1,10,1,1,"rake, gel, lake, cake, keg, rack, earl, are, rag, lag, leg, race, car, ear, ace, grace, lace, kale, real, ",19,20,public
+University of Phoenix,3,1,1,1,2,NA,NA,NA,NA,6,2,6,NA,2,3,NA,6,2,6,1,2,"cage, real, age, lake, crag, rag, rale, ale, leak, car, care, are, rake, rage, ear, gel, gear, grace, race, ace, ark, lark, lag, ",23,24,public
+Purdue University,2,NA,NA,NA,NA,4,5,5,5,6,2,6,NA,2,3,NA,5,3,4,6,1,"rack, kale, rag, gal, race, lace, keg, rage, cage, ale, car, ace, are, care, lear, reak, ",15,17,public
+Florida International University,4,1,1,1,1,NA,NA,NA,NA,7,7,1,NA,7,4,NA,5,5,9,1,2,"keg, gal, leak, car, leg, lark, ark, ear, care, are, age, lake, rake, cake, creak, gale, ",16,17,public
+University of Pittsburgh,4,1,1,1,1,NA,NA,NA,NA,7,1,7,NA,1,1,NA,7,5,4,2,1,"creak, real, lake, lager, race, grace, lace, gale, kale",9,9,public
+Stanford,3,5,5,5,3,NA,NA,NA,NA,4,5,3,NA,6,5,NA,3,6,7,5,1,"Laker, acre, clear, lake, grace, regal, ace, age, ark, car, ",10,11,private
+marshall university,3,4,4,4,3,NA,NA,NA,NA,6,2,5,4,5,5,NA,5,5,4,7,1,"grace, ace, lace, race, lake, rake, cake, ale, rale, kale, gale, real, ear, gear, lear, lare, are, leak, rack, lack, rae, real",19,22,public
+peirce college,2,1,1,1,1,NA,NA,NA,NA,6,2,6,NA,2,4,NA,4,5,6,3,1,"cake, lake, car, real, gear, leak, grace, care, rake, acre, ear, ",11,12,private
+University of the Pacific,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,private
+baruch,3,NA,NA,NA,NA,5,5,5,5,6,3,6,NA,2,3,NA,6,2,5,4,2,"creak, leg, rag, rage, cage, reak, gear, rake, lace, car, care, gel, eal, ear, keg, reg, leak, r",15,18,public
+Rensselaer Polytechnic Institute,4,5,5,4,5,NA,NA,NA,NA,2,6,2,NA,6,6,NA,2,6,10,5,1,"CARE, CAR, EAR, RACK, GRACE, GEAR, LACK, CARL, EARL, RAKE, CAKE, LAKE, LAG, RAG, RAGE, CAGE, GEL, ALE, ",18,19,private
+New Mexico Highlands University,4,NA,NA,NA,NA,4,4,3,4,5,3,5,NA,3,3,NA,6,3,7,2,2,"Creak, lake, rake, gear, lear, cake, care, lace, race, grace, glare, real, rale, kale, ace, rack, lark, gale, ale, keg",20,20,public
+Mansfield University,3,NA,NA,NA,NA,3,4,3,2,3,4,4,NA,5,4,NA,3,4,6,1,1,"GAL, CAR, CARE, RACE, RAKE, LAKE, RAG, CAKE, KEG, EAR, GEAR, CLEAR, KALE, GALE, ",14,15,public
+City University of New York,4,NA,NA,NA,NA,6,6,5,4,5,3,6,NA,3,2,NA,5,2,6,3,1,"Car, rake, clear, real, ear, lake, lace, leg, keg, age, ",10,11,public
+University of Alaska Anchorage,2,NA,NA,NA,NA,6,6,6,6,7,4,4,NA,4,3,NA,4,4,3,6,2,"LAKE, LARGE, LARK, EAR, ACRE, KEG, LEG, LEAR, CARE, CAR, GEAR, RACE, LACE, CREAK, LEAK, ",15,16,public
+Point Park University,4,NA,NA,NA,NA,2,1,1,1,5,5,5,NA,3,3,NA,5,3,7,3,1,"keg, leg, gale, rake, real, kale, care, car, leak, race, grace, lace, ace, are, arc, glare, ",16,17,private
+"California State University, San Bernardino",4,NA,NA,NA,NA,4,4,4,4,5,2,6,NA,2,4,NA,4,4,8,3,2,"cake, lake, lark, car, rake, cage, real, kale, rage",9,9,public
+asu,3,5,4,4,5,NA,NA,NA,NA,5,4,6,5,5,4,NA,6,5,6,6,2,"car, are, age, ale, leg, lag, care, cake, rake, lake, ",10,11,public
+university of maine,1,NA,NA,NA,NA,3,3,4,5,4,3,6,NA,2,3,NA,4,2,6,2,2,"rag, keg, care, age, rage, cage, gear, rake, rack, lack, ale, kale, crag, leg, ",14,15,public
+Mankato State University,2,NA,NA,NA,NA,5,6,5,6,5,2,6,NA,5,2,NA,6,2,8,1,1,"rake, lake, rack, rage, cage, rag, keg, large, cake, gal, lag, leak, real, are, age, ",15,16,public
+University of Wisconsin Parkside,3,NA,NA,NA,NA,5,4,4,4,6,2,5,NA,2,3,NA,5,3,8,2,2,"RAKE, GEAR, LEAK, ARE, ARC, KALE, LAKE, RACK, REAK, ALE, RALE, RECK",11,12,public
+Lewis University ,5,5,6,5,5,NA,NA,NA,NA,5,4,5,6,6,5,4,5,5,5,4,1,"CRAG, LECRE",1,2,private
+University of Tennessee College of Pharmacy,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,community
+montgomery college,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,community
+University of Montana,6,NA,NA,NA,NA,4,4,3,4,5,4,3,NA,3,5,NA,3,5,8,3,1,"race, cake, rake, real, rack, lack, rag, are, care, kale, lag, leg",12,12,public
+The Ohio State University ,4,4,3,3,3,NA,NA,NA,NA,2,4,4,NA,3,6,NA,3,5,7,1,1,"cake, rake, lake, lear, gear, real, care, are, car, lark, creak, real, kale, are, gale, leg, gel, crag",16,18,public
+Middlesex county college,2,5,4,4,4,NA,NA,NA,NA,5,4,5,NA,5,5,NA,5,4,4,5,2,"Clear, ear, car, rake, cake, lake, real, Grace, lace, race, lag, rag, Lear, care, rage, cage, ",16,17,community
+The University of Texas at Austin,4,NA,NA,NA,NA,6,3,6,5,7,1,7,NA,1,2,NA,6,2,6,3,1,"RAG, CAR, EAR, KEG, LAG, ERA, ARE, ACE, GEL, ",9,10,public
+NJIT,3,NA,NA,NA,NA,6,6,6,4,1,2,6,NA,1,1,NA,6,1,9,1,1,"cake, cage, lake, rake, ear, car, era, kale, grace, race, earl, gale, ace, Carl",14,14,public
+Purdue University,4,NA,NA,NA,NA,5,5,5,5,6,1,5,NA,1,5,NA,3,6,6,2,1,"ace, agree, age, arc, are, area, areal, cackle, cage, cager, cake, call, caller, car, career, cell, cellar, cereal, crack, cracker",8,20,public
+LSU BATON ROUGE La,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Chamberlain  ,2,NA,NA,NA,NA,2,1,2,1,5,3,5,NA,3,3,NA,5,2,7,3,2,"Cage, large, cake, lake, leak, ear, care, car, rack, rake, rag, real, lag, gear, rage, ",15,16,community
+University of Nebraska-Lincoln,4,NA,NA,NA,NA,5,5,5,6,6,6,7,NA,2,5,NA,5,5,3,5,1,"car, race, lace, lare, are, gar, gear, care, rale, rage, age, cage, clear, lear, ear, cager, rake, crag, rag, creak, grace, ace, acer, leak, gale, ale, ",24,27,public
+University of Rochester,4,1,1,1,1,NA,NA,NA,NA,6,1,6,NA,1,3,NA,4,3,8,1,1,"rage, cake, care, kale, gale, gale, rag, rack, rake, goal, race, grace, ",10,13,private
+California Polytechnic University Pomona,2,4,3,3,5,NA,NA,NA,NA,3,5,3,NA,6,2,NA,5,6,3,6,1,"Leak, Rage, Gale, Kale, Rag, Lag, Large, Lack, Real, Rake, Race, Car, Care, Leg, Cage",15,15,public
+Northeastern University,2,2,1,1,3,NA,NA,NA,NA,2,2,6,NA,2,1,NA,6,2,7,2,1,"creak, leg, real, keg, kale, leak, cake, ear, lake, rake, gale, lag, cal, cage, are, arg, arc, ark, earl, crag, gear, ",19,22,private
+Folsom Lake College,2,NA,NA,NA,NA,5,1,2,3,2,5,3,NA,6,6,NA,6,6,7,3,1,"RACE, CAR, LACE, KEG, LAG, RAG, RAGE, LAGER, REAL, LACK, GRACE, RACK, LEG, RAKE, CREAK",15,15,public
+SNHU,1,NA,NA,NA,NA,4,5,4,4,5,4,5,NA,3,3,NA,4,3,6,3,2,"LAKE, RAKE, RAG, ",3,4,private
+csub-cal state university of bakersfield,6,NA,NA,NA,NA,4,5,5,4,6,2,6,NA,2,2,NA,6,2,7,2,1,"rag, clear, gear, lear, cake, glare, rack, keg, car, care, leak, ace",12,12,public
+Emory University,2,NA,NA,NA,NA,6,5,5,4,5,2,6,NA,3,6,NA,3,6,6,3,1,"lack, rack, gel, leg, elk, crag, lark, real, gale, car, creak, clear, large, clerk, grace, glare, regal, earl, lager, leak, rage, lace, care, calk, cake, ear, ark, arc, era, grackle",30,30,private
+Brandeis University,5,3,3,3,4,NA,NA,NA,NA,4,4,4,NA,4,3,NA,5,3,4,3,1,"race, real, gel, clear, rake, cake, care, crag, are, ear, acre, glare, cage, rage, age, era, rack, lack, lace, gal, lag, rag, ale, lake, large, car, care, gear, leak, ace, lark, ",30,32,private
+ASU,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,public
+Florida community college,2,NA,NA,NA,NA,4,5,5,4,5,5,4,NA,5,3,NA,3,3,5,2,2,"lake, kale, keg, leg, real, rale, rag, cage, rage, lace, race, car, care, rake, cake, lake, ",15,17,community
+University of Texas,4,5,4,4,5,NA,NA,NA,NA,4,5,4,4,6,5,6,5,5,7,2,1,"Keg, rag, car, race, care, cake, ace, lace, gal, are, age, rake, rage, ",13,14,public
+Virginia Commonwealth University,3,NA,NA,NA,NA,5,5,5,5,6,2,5,NA,2,3,NA,5,3,4,4,2,"care, lace, race, cage, gar, car, rack, glare, rage, lake, gel, ark, arc, ",13,14,public
+Northeastern University,3,NA,NA,NA,NA,5,5,6,6,6,2,6,NA,1,7,NA,2,7,3,2,1,"leg, keg, car, care, lag, lake, kale, ale, real, clear, gel, keal, geal, creal, gare, gear, rage, rag, creak, ",15,20,private
+Boston Univesrsity,3,NA,NA,NA,NA,5,5,4,3,3,2,5,NA,3,6,NA,2,6,6,3,2,"creak, cage, rake, lake, cake, real, kale, gale, gear, care, glare, keg, crag, lag, rag, ",15,16,private
+Montclair State University,2,3,4,5,3,NA,NA,NA,NA,4,4,4,NA,4,4,NA,3,4,7,5,1,"glare, lake, car, ",3,4,public
+Ashland Univeristy,3,4,3,2,1,NA,NA,NA,NA,6,2,6,NA,2,3,NA,5,5,4,4,2,"grackle, keg, cake, crack, leg, leak, rag, rage, rake, lag, creak, car, ",11,13,private
+Bakersfield college ,3,NA,NA,NA,NA,5,5,5,5,6,1,6,NA,1,1,NA,7,4,5,3,1,"Rack, Crack, ear, car, lag, care, lake",6,7,community
+"university of nevada, reno",6,NA,NA,NA,NA,5,5,5,5,5,5,5,NA,5,6,NA,2,6,6,3,1,"lake, cake, rack, rake, lack, keg, car, gale, leg, rag, race, lace, gear, clear, crag, ",15,16,public
+Linn Benton Community College,2,1,1,1,2,NA,NA,NA,NA,5,5,5,NA,3,5,NA,5,3,7,2,1,"Ear, Car, Gal, Ark, Age, Rag, Lag, Are, Ale, Gel",10,10,community
+California State University Northridge,4,NA,NA,NA,NA,5,5,5,4,6,2,5,NA,2,4,NA,4,5,5,8,1,"Crackle, Grackle, Lake, Rake, Cake, Leak, Leg, r",6,8,public
+RIT,3,2,2,2,4,NA,NA,NA,NA,5,3,5,NA,2,5,NA,3,5,8,3,1,"Keg, crag, lake, care, car, rack, real, age, ace, race, grace, gear, leg, gel, clear, lag, gal, lace, kale, ",19,20,private
