@@ -1,0 +1,616 @@
+---
+title: "Study 3"
+output:
+  html_document:
+    toc: true
+    theme: default
+---
+
+## (1) Description of Data Files
+
+```{r include=FALSE}
+options(width=100)
+
+library(plyr)
+library(lm.beta)
+library(pequod)
+library(psych)
+library(data.table)
+library(mediation)
+library(RCurl)
+
+# load data
+csv <- getURL("https://raw.githubusercontent.com/abrowman/psm-jesp2017/master/Study%203/SocMobility_Study3.csv")
+alldata <- read.csv(textConnection(csv))
+mydata <- subset(alldata, !is.na(gpa) & !is.na(MedianIncome_BlockGroup))
+```
+
+The posted data for this study consists of 1 compiled, deidentified data file (total *N* recruited = `r nrow(alldata)`):  
+
+* `r nrow(alldata) - nrow(mydata)` responses were excluded because we could not obtain administrative data (SES and GPA) for those participants\
+
+```{r include=FALSE}
+# determine conditions
+mydata$cond <- factor(ifelse(!is.na(mydata$Fixed), "weak", ifelse(!is.na(mydata$Growth), "strong", ifelse(!is.na(mydata$Control), "ctrl", NA))))
+mydata <- subset(mydata, !is.na(cond))
+options(contrasts=c("contr.sum","contr.poly"))
+attach(mydata)
+
+# compute variables
+persist <- ((8-persist1)+(8-persist2)+(8-persist3)+(8-persist4)+(8-persist5)+(8-persist6))/6
+ladder <- LadderUS
+ladder_c <- scale(ladder,scale=F,center=T)
+income <- as.numeric((gsub(",", "", MedianIncome_BlockGroup))) # removed commas from income values
+income.cat <- ifelse(income<=25000, 1, ifelse(income>=25001 & income<=40000, 2, ifelse(income>=40001 & income<=70000, 3, ifelse(income>=70001 & income<=90000, 4, ifelse(income>=90001 & income<=12000, 5, ifelse(income>=12001 & income<=150000, 6, ifelse(income>=150001 & income<=200000, 7, ifelse(income>=200001 & income<=250000, 8, ifelse(income>=250001, 9, NA))))))))) # income categories (based on those used in our other studies)
+incomecat_c <- scale(income.cat,scale=T,center=T)
+```
+
+
+## (2) Descriptive statistics
+
+**Total *N*:** `r nrow(mydata)`
+
+**Percentage by gender:**
+```{r echo=FALSE}
+gender <- factor(ifelse(Gender==1, "male", ifelse(Gender==2, "female", ifelse(Gender==3, "doesn't identify as either", NA))))
+table(gender, useNA="always")
+
+gender_c <- scale(ifelse(gender=="male", 1, ifelse(gender=="female", -1, NA)), scale=F,center=T)
+
+gender2 <- factor(ifelse(Gender==1, "male", ifelse(Gender==2, "female", NA)))
+```
+
+**Percentage of sample by all races:**
+```{r echo=FALSE}
+race.df <- data.frame(Race_1,Race_2,Race_3,Race_4,Race_5,Race_6,Race_7)
+race.num <- as.numeric(ifelse(rowSums(!is.na(race.df))==0, NA, ifelse(rowSums(!is.na(race.df))!=1, 8, apply(!is.na(race.df), 1, function(x) gsub("[^0-9]", "",names(which(x)))))))
+race <- ifelse(race.num==1, "native-american", ifelse(race.num==2, "asian", ifelse(race.num==3, "black", ifelse(race.num==4, "latino", ifelse(race.num==5, "middle-eastern", ifelse(race.num==6, "islander", ifelse(race.num==7, "white", ifelse(race.num==8, "multiracial", NA))))))))
+round(sort((table(race, useNA="always")/nrow(mydata))*100, decreasing=T), digits=1)
+
+race.cat <- factor(ifelse(race=="white" | race=="asian", "non-stigmatized", ifelse(!is.na(race), "stigmatized", NA)))
+race.cat_c <- scale(ifelse(race.cat=="non-stigmatized", 1, ifelse(race.cat=="stigmatized", -1, NA)), scale=F,center=T)
+round(sort((table(race.cat, useNA="always")/nrow(mydata))*100,decreasing=T), digits = 1)
+```
+
+***N* in each condition:** We had 3 conditions in this study: "weak" (i.e, they saw the weak LTSS figure), "strong" (i.e, they saw the malleable LTSS figure), and "control" (i.e., they were not presented with a figure).
+```{r echo=FALSE}
+table(cond, useNA="always")
+```
+
+***M*s and *SD*s:**
+```{r echo=FALSE}
+describe(data.frame(Age,income,income.cat,ladder,persist,gpa))[c(2,3,4,8,9)]
+```
+
+**Alpha for inclinations to persist:** `r round(alpha(data.frame((8-persist1),(8-persist2),(8-persist3),(8-persist4),(8-persist5),(8-persist6)))$total$raw_alpha, digits=2)` 
+
+**Correlations between income and subjective SES:**
+```{r echo=FALSE}
+cor.test(income, ladder)
+cor.test(income.cat, ladder)
+```
+
+
+## (3) Random assignment checks
+
+### ANOVA, *M*s, and *SD*s for income
+```{r echo=FALSE}
+summary(aov(income.cat ~ cond))
+```
+
+**Descriptives for the strong condition:**
+```{r echo=FALSE}
+describeBy(income.cat, cond)$"strong"[c(2,3,4)]
+```
+
+**Descriptives for the weak condition:**
+```{r echo=FALSE}
+describeBy(income.cat, cond)$"weak"[c(2,3,4)]
+```
+
+**Descriptives for the control condition:**
+```{r echo=FALSE}
+describeBy(income.cat, cond)$"ctrl"[c(2,3,4)]
+```
+
+
+### ANOVA, *M*s, and *SD*s for subjective SES
+```{r echo=FALSE}
+summary(aov(ladder ~ cond))
+```
+
+**Descriptives for the strong condition:**
+```{r echo=FALSE}
+describeBy(ladder, cond)$"strong"[c(2,3,4)]
+```
+
+**Descriptives for the weak condition:**
+```{r echo=FALSE}
+describeBy(ladder, cond)$"weak"[c(2,3,4)]
+```
+
+**Descriptives for the control condition:**
+```{r echo=FALSE}
+describeBy(ladder, cond)$"ctrl"[c(2,3,4)]
+```
+
+
+## (4) Main analyses
+
+### Persistence analyses
+
+#### Analyses with income
+
+**Correlation between income and academic persistence:**
+```{r echo=FALSE}
+cor.test(income, persist)
+```
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+aov.inc <- drop1(lm(persist ~ incomecat_c * cond), ~., test="F")
+aov.inc
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ incomecat_c * cond))`
+
+**Ctrl vs. weak interaction and ctrl vs. strong interaction:**
+```{r echo=FALSE}
+contrasts1 <- factor(cond, levels = c("ctrl","weak","strong"))
+contrasts(contrasts1) <- "contr.treatment"
+contrasts(contrasts1)
+summary(lm.beta(lm(persist ~ contrasts1 * incomecat_c)))
+inc.contr1 <- lm(persist ~ contrasts1 * incomecat_c)
+inc.contr1.ci <- data.frame(round(confint(inc.contr1, level = 0.95), digits=2))
+colnames(inc.contr1.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+inc.contr1.ci
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. strong simple slopes among lower-SES students ("contrast" terms):**
+```{r echo=FALSE}
+loinc <- incomecat_c + sd(incomecat_c, na.rm=T)
+contrasts(contrasts1)
+summary(loinc.contr1 <- lm(persist ~ contrasts1 * loinc))
+loinc.contr1.ci <- round(confint(loinc.contr1, level = 0.95), digits=2)
+colnames(loinc.contr1.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+loinc.contr1.ci
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. malleable simple slopes among higher-SES students ("contrast" terms):**
+```{r echo=FALSE}
+hiinc <- incomecat_c - sd(incomecat_c, na.rm=T)
+contrasts(contrasts1)
+summary(lm.beta(lm(persist ~ contrasts1 * hiinc)))
+hiinc.contr1 <- lm(persist ~ contrasts1 * hiinc)
+hiinc.contr1.ci <- data.frame(round(confint(hiinc.contr1, level = 0.95), digits=2))
+colnames(hiinc.contr1.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+hiinc.contr1.ci
+```
+
+**Weak vs. strong interaction and weak vs. ctrl interaction (repeated from previous analyses):**
+```{r echo=FALSE}
+contrasts2 <- factor(cond, levels = c("weak","strong","ctrl"))
+contrasts(contrasts2) <- "contr.treatment"
+contrasts(contrasts2)
+summary(lm.beta(lm(persist ~ contrasts2 * incomecat_c)))
+inc.contr2 <- lm(persist ~ contrasts2 * incomecat_c)
+inc.contr2.ci <- data.frame(round(confint(inc.contr2, level = 0.95), digits=2))
+colnames(inc.contr2.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+inc.contr2.ci
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among lower-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+summary(lm.beta(lm(persist ~ contrasts2 * loinc)))
+loinc.contr2 <- lm(persist ~ contrasts2 * loinc)
+loinc.contr2.ci <- data.frame(round(confint(loinc.contr2, level = 0.95), digits=2))
+colnames(loinc.contr2.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+loinc.contr2.ci
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among higher-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+summary(lm.beta(lm(persist ~ contrasts2 * hiinc)))
+hiinc.contr2 <- lm(persist ~ contrasts2 * hiinc)
+hiinc.contr2.ci <- data.frame(round(confint(hiinc.contr2, level = 0.95), digits=2))
+colnames(hiinc.contr2.ci) <- c("CIs: Lower (estimate)", "Upper (estimate)")
+hiinc.contr2.ci
+```
+
+**Plot:**\
+```{r echo=FALSE, warning=FALSE}
+weak.loinc <- data.frame(cond = "weak", incomecat_c = mean(incomecat_c, na.rm=T) - sd(incomecat_c, na.rm=T))
+weak.hiinc <- data.frame(cond = "weak", incomecat_c = mean(incomecat_c, na.rm=T) + sd(incomecat_c, na.rm=T))
+mall.loinc <- data.frame(cond = "strong", incomecat_c = mean(incomecat_c, na.rm=T) - sd(incomecat_c, na.rm=T))
+mall.hiinc <- data.frame(cond = "strong", incomecat_c = mean(incomecat_c, na.rm=T) + sd(incomecat_c, na.rm=T))
+ctrl.loinc <- data.frame(cond = "ctrl", incomecat_c = mean(incomecat_c, na.rm=T) - sd(incomecat_c, na.rm=T))
+ctrl.hiinc <- data.frame(cond = "ctrl", incomecat_c = mean(incomecat_c, na.rm=T) + sd(incomecat_c, na.rm=T))
+persist.lm <- lm(persist ~ as.numeric(incomecat_c) * cond)
+
+inc.plot.points <- data.frame(c("bWeak","bWeak","cMalleable","cMalleable","aControl","aControl"), c("aLow-SES","bHigh-SES","aLow-SES","bHigh-SES","aLow-SES","bHigh-SES"), c(predict(persist.lm, weak.loinc, type="response"), predict(persist.lm, weak.hiinc, type="response"), predict(persist.lm, mall.loinc, type="response"), predict(persist.lm, mall.hiinc, type="response"), predict(persist.lm, ctrl.loinc, type="response"), predict(persist.lm, ctrl.hiinc, type="response")), c(describe(persist)$se, describe(persist)$se, describe(persist)$se, describe(persist)$se, describe(persist)$se, describe(persist)$se))
+colnames(inc.plot.points) <- c("ltss","ses","score","se")
+limits <- aes(ymax=score+se, ymin=score-se)
+
+lo.title <- expression(paste("Lower-SES students (-1 ", italic("SD"), ")"))
+hi.title <- expression(paste("Higher-SES students (+1 ", italic("SD"), ")"))
+
+ggplot(inc.plot.points, aes(x=ses, y=score, fill=ltss)) +
+  geom_bar(stat="identity",position=position_dodge(width=.6), colour="black", width=.5) +
+  scale_fill_manual(values=c("white", "light gray", "dark gray"),
+                    breaks=c("aControl", "bWeak", "cMalleable"),
+                    labels=c(" Control condition      ", " Weak mobility beliefs condition      ", " Strong mobility beliefs condition")) +
+  geom_errorbar(limits, position=position_dodge(width=.6), width=.1) +
+  geom_hline(yintercept=0) +
+  theme_bw(base_family = "Arial", base_size = 16) + # font and font size
+  theme(legend.position = "bottom") + # legend position
+  theme(legend.title = element_blank()) + # remove legend title
+  theme(axis.title.x = element_blank()) + # move x-axis label lower
+  theme(axis.title.y = element_text(vjust=1.3)) + # move y-axis label left
+  theme(panel.grid.minor = element_blank()) + # no grids
+  theme(panel.grid.major = element_blank()) + # no borders
+  theme(panel.border = element_blank()) + # removes default grey axis lines
+  theme(axis.line = element_line(color = 'black')) + # put axis lines back, but in black
+  coord_cartesian(ylim=c(1, 7)) + # y-axis range
+  scale_x_discrete("", labels = c("aLow-SES"=lo.title, "bHigh-SES"=hi.title)) + # x-axis titles
+  scale_y_continuous("Inclinations to persistence academically", breaks = seq(1, 7, by = 1)) # y-axis titles and range
+ggsave('Figure 3.png', width=9, height=6, unit='in', dpi=300)
+```
+
+
+#### Analyses with income and race
+
+##### Main effect of race
+```{r echo=FALSE}
+var.test(persist ~ race.cat)
+t.test(persist ~ race.cat, var.equal=T)
+describeBy(persist, race.cat)
+```
+
+##### Condition x income analyses
+```{r echo=FALSE}
+aov.inc.race <- drop1(lm(persist ~ cond * incomecat_c * race.cat_c), ~., test="F")
+aov.inc.race
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ incomecat_c * cond * race.cat_c))`
+
+**Ctrl vs. weak interaction and ctrl vs. strong interaction:**
+```{r echo=FALSE}
+summary(lm.beta(lm(persist ~ contrasts1 * incomecat_c * race.cat_c)))
+inc.contr1 <- lm(persist ~ contrasts1 * incomecat_c * race.cat_c)
+round(confint(inc.contr1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. strong simple slopes among lower-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+nonstig <- race.cat_c - sd(race.cat_c, na.rm=T)
+summary(loinc.nonstig1 <- lm(persist ~ contrasts1 * loinc * nonstig))
+round(confint(loinc.nonstig1, level = 0.95), digits=2)
+
+stig <- race.cat_c + sd(race.cat_c, na.rm=T)
+summary(loinc.stig1 <- lm(persist ~ contrasts1 * loinc * stig))
+round(confint(loinc.stig1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. malleable simple slopes among higher-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+summary(hiinc.nonstig1 <- lm(persist ~ contrasts1 * hiinc * nonstig))
+round(confint(hiinc.nonstig1, level = 0.95), digits=2)
+
+summary(hiinc.stig1 <- lm(persist ~ contrasts1 * hiinc * stig))
+round(confint(hiinc.stig1, level = 0.95), digits=2)
+```
+
+**Weak vs. strong interaction and weak vs. ctrl interaction (repeated from previous analyses):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(lm.beta(lm(persist ~ contrasts2 * incomecat_c * race.cat_c)))
+inc.contr2 <- lm(persist ~ contrasts2 * incomecat_c * race.cat_c)
+round(confint(inc.contr2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among lower-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(loinc.nonstig2 <- lm(persist ~ contrasts2 * loinc * nonstig))
+round(confint(loinc.nonstig2, level = 0.95), digits=2)
+
+summary(loinc.stig2 <- lm(persist ~ contrasts2 * loinc * stig))
+round(confint(loinc.stig2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among higher-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(hiinc.nonstig2 <- lm(persist ~ contrasts2 * hiinc * nonstig))
+round(confint(hiinc.nonstig2, level = 0.95), digits=2)
+
+summary(hiinc.stig2 <- lm(persist ~ contrasts2 * hiinc * stig))
+round(confint(hiinc.stig2, level = 0.95), digits=2)
+```
+
+
+#### Analyses with income and gender
+
+##### Main effect of gender
+```{r echo=FALSE}
+var.test(persist ~ gender2)
+t.test(persist ~ gender2, var.equal=T)
+describeBy(persist, gender2)
+```
+
+##### Condition x SES analyses
+```{r echo=FALSE}
+aov.inc.gender <- drop1(lm(persist ~ cond * incomecat_c * gender_c), ~., test="F")
+aov.inc.gender
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ incomecat_c * cond * gender_c))`
+
+**Ctrl vs. weak interaction and ctrl vs. strong interaction:**
+```{r echo=FALSE}
+summary(lm.beta(lm(persist ~ contrasts1 * incomecat_c * gender_c)))
+inc.contr1 <- lm(persist ~ contrasts1 * incomecat_c * gender_c)
+round(confint(inc.contr1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. strong simple slopes among lower-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+men <- gender_c - sd(gender_c, na.rm=T)
+summary(loinc.men1 <- lm(persist ~ contrasts1 * loinc * men))
+round(confint(loinc.men1, level = 0.95), digits=2)
+
+women <- gender_c + sd(gender_c, na.rm=T)
+summary(loinc.women1 <- lm(persist ~ contrasts1 * loinc * women))
+round(confint(loinc.women1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. malleable simple slopes among higher-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+summary(hiinc.men1 <- lm(persist ~ contrasts1 * hiinc * men))
+round(confint(hiinc.men1, level = 0.95), digits=2)
+
+summary(hiinc.women1 <- lm(persist ~ contrasts1 * hiinc * women))
+round(confint(hiinc.women1, level = 0.95), digits=2)
+```
+
+**Weak vs. strong interaction and weak vs. ctrl interaction (repeated from previous analyses):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(lm.beta(lm(persist ~ contrasts2 * incomecat_c * gender_c)))
+inc.contr2 <- lm(persist ~ contrasts2 * incomecat_c * gender_c)
+round(confint(inc.contr2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among lower-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(loinc.men2 <- lm(persist ~ contrasts2 * loinc * men))
+round(confint(loinc.men2, level = 0.95), digits=2)
+
+summary(loinc.women2 <- lm(persist ~ contrasts2 * loinc * women))
+round(confint(loinc.women2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among higher-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(hiinc.men2 <- lm(persist ~ contrasts2 * hiinc * men))
+round(confint(hiinc.men2, level = 0.95), digits=2)
+
+summary(hiinc.women2 <- lm(persist ~ contrasts2 * hiinc * women))
+round(confint(hiinc.women2, level = 0.95), digits=2)
+```
+
+
+#### Analyses with subjective SES
+
+**Correlation between subjective SES and academic persistence:**
+```{r echo=FALSE}
+cor.test(ladder, persist)
+```
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+aov.ldr <- drop1(lm(persist ~ ladder_c * cond), ~., test="F")
+aov.ldr
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ ladder_c * cond))`
+
+
+#### Analyses with subjective SES and race
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+aov.ldr.race <- drop1(lm(persist ~ ladder_c * cond * race.cat_c), ~., test="F")
+aov.ldr.race
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ ladder_c * cond * race.cat_c))`
+
+
+#### Analyses with subjective SES and gender
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+aov.ldr.gender <- drop1(lm(persist ~ ladder_c * cond * gender_c), ~., test="F")
+aov.ldr.gender
+```
+
+**Denominator DFs:** `r df.residual(lm(persist ~ ladder_c * cond * gender_c))`
+
+
+### GPA analyses
+
+#### Analysis with income
+
+**Correlation between income and GPA:**
+```{r echo=FALSE}
+cor.test(income, gpa)
+```
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+gpa.aov.inc <- drop1(lm(gpa ~ incomecat_c * cond), ~., test="F")
+gpa.aov.inc
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ incomecat_c * cond))`
+
+
+#### Analysis with income and race
+
+##### Main effect of race
+```{r echo=FALSE}
+var.test(gpa ~ race.cat)
+t.test(gpa ~ race.cat, var.equal=F)
+describeBy(gpa, race.cat)
+```
+
+##### Condition x income analysis
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+gpa.aov.inc.race <- drop1(lm(gpa ~ incomecat_c * cond * race.cat_c), ~., test="F")
+gpa.aov.inc.race
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ incomecat_c * cond * race.cat_c))`
+
+
+#### Analysis with income and gender
+
+##### Main effect of gender
+```{r echo=FALSE}
+var.test(gpa ~ gender2)
+t.test(gpa ~ gender2, var.equal=F)
+describeBy(gpa, gender2)
+```
+
+##### Condition x income analyses
+
+**Omnibus interaction:**
+```{r echo=FALSE}
+gpa.aov.inc <- drop1(lm(gpa ~ incomecat_c * cond * gender_c), ~., test="F")
+gpa.aov.inc
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ incomecat_c * cond * gender_c))`
+
+
+**Ctrl vs. weak interaction and ctrl vs. strong interaction:**
+```{r echo=FALSE}
+summary(lm.beta(lm(gpa ~ contrasts1 * incomecat_c * gender_c)))
+inc.gpa.contr1 <- lm(gpa ~ contrasts1 * incomecat_c * gender_c)
+round(confint(inc.gpa.contr1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. strong simple slopes among lower-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+summary(loinc.gpa.men1 <- lm(gpa ~ contrasts1 * loinc * men))
+round(confint(loinc.gpa.men1, level = 0.95), digits=2)
+
+summary(loinc.gpa.women1 <- lm(gpa ~ contrasts1 * loinc * women))
+round(confint(loinc.gpa.women1, level = 0.95), digits=2)
+```
+
+**Ctrl vs. weak simple slopes and ctrl vs. malleable simple slopes among higher-SES male and female students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts1)
+
+summary(hiinc.gpa.men1 <- lm(gpa ~ contrasts1 * hiinc * men))
+round(confint(hiinc.gpa.men1, level = 0.95), digits=2)
+
+summary(hiinc.gpa.women1 <- lm(gpa ~ contrasts1 * hiinc * women))
+round(confint(hiinc.gpa.women1, level = 0.95), digits=2)
+```
+
+**Weak vs. strong interaction and weak vs. ctrl interaction (repeated from previous analyses):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(lm.beta(lm(gpa ~ contrasts2 * incomecat_c * gender_c)))
+inc.gpa.contr2 <- lm(gpa ~ contrasts2 * incomecat_c * gender_c)
+round(confint(inc.gpa.contr2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among lower-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(loinc.gpa.men2 <- lm(gpa ~ contrasts2 * loinc * men))
+round(confint(loinc.gpa.men2, level = 0.95), digits=2)
+
+summary(loinc.gpa.women2 <- lm(gpa ~ contrasts2 * loinc * women))
+round(confint(loinc.gpa.women2, level = 0.95), digits=2)
+```
+
+**Weak vs. mallable simple slopes and weak vs. ctrl simple slopes (repeated) among higher-SES students ("contrast" terms):**
+```{r echo=FALSE}
+contrasts(contrasts2)
+
+summary(hiinc.gpa.men2 <- lm(gpa ~ contrasts2 * hiinc * men))
+round(confint(hiinc.gpa.men2, level = 0.95), digits=2)
+
+summary(hiinc.gpa.women2 <- lm(gpa ~ contrasts2 * hiinc * women))
+round(confint(hiinc.gpa.women2, level = 0.95), digits=2)
+```
+
+#### Analysis with subjective SES
+
+**Correlation between subjective SES and GPA:**
+```{r echo=FALSE}
+cor.test(ladder, gpa)
+```
+
+```{r echo=FALSE}
+gpa.aov.ldr <- drop1(lm(gpa ~ ladder_c * cond), ~., test="F")
+gpa.aov.ldr
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ ladder_c * cond))`
+
+
+#### Analysis with subjective SES and race
+
+```{r echo=FALSE}
+gpa.aov.ldr.race <- drop1(lm(gpa ~ ladder_c * cond * race.cat_c), ~., test="F")
+gpa.aov.ldr.race
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ ladder_c * cond * race.cat_c))`
+
+
+#### Analysis with subjective SES and gender
+
+```{r echo=FALSE}
+gpa.aov.ldr.gender <- drop1(lm(gpa ~ ladder_c * cond * gender_c), ~., test="F")
+gpa.aov.ldr.gender
+```
+
+**Denominator DFs:** `r df.residual(lm(gpa ~ ladder_c * cond * gender_c))`
+
+
+### Correlation between interpretation of difficulty and gpa
+```{r echo=FALSE}
+cor.test(persist, gpa)
+```

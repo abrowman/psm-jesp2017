@@ -1,0 +1,50 @@
+---
+title: "Scale Construction Study #1"
+output:
+  html_document:
+    toc: true
+    theme: default
+---
+
+## (1) Description of Data Files
+
+```{r include=FALSE}
+options(width=100)
+
+library(RCurl)
+
+# load data
+csv <- getURL("https://raw.githubusercontent.com/abrowman/psm-jesp2017/master/Scale%20Construction%20Study%201/SocMobility_ScaleConstruction1.csv")
+mydata <- read.csv(textConnection(csv))
+```
+
+The posted data for this study consists of 1 compiled, deidentified data file (total *N* recruited = `r nrow(mydata)`):
+
+* `r nrow(subset(mydata, response==""))` participants excluded because they did not complete the task\
+* `r nrow(subset(mydata, comments!="" & comments!="Did not complete task"))` participants excluded because they did not follow the instructions\
+
+```{r include=FALSE}
+mydata <- subset(mydata, response!="") # remove Ps who did not complete the task
+mydata <- subset(mydata, comments=="") # remove Ps who did not follow the instructions
+attach(mydata)
+```
+
+## (2) Analyses
+
+**Total *N*:** `r nrow(mydata)`
+
+```{r include=FALSE}
+ses <- ifelse(education==1 | wealth==1 | occupation==1 | income==1 | class==1 | finances==1 | mobility==1 | possessions==1 | standard.of.living==1 | lifestyle==1 | affluence==1 | socioeconomic==1 | economic==1, 1, 0)
+
+ses.tot <- rowSums(data.frame(education, wealth, occupation, income, class, finances, mobility, possessions, standard.of.living, lifestyle, affluence, socioeconomic, economic))
+
+other.tot <- rowSums(data.frame(environment, regard.respect.reputation, ethnicity, friends, privilege, power, family, position.vs.others, good.person, importance, appearance, prestige, connections, success, wellbeing, social.conduct, authority, hierarchy, residence, influence, compassion, intelligence))
+```
+
+**Percentage of participants who gave a socioeconomic response:** `r round(sum(ses, na.rm=T)/nrow(mydata)*100, digits=1)`%
+
+**T-test of whether Ps gave more socioeconomic or non-socioeconomic responses:**
+```{r echo=FALSE}
+t.test(ses.tot, other.tot, var.equal=T, paired=T)
+```
+\

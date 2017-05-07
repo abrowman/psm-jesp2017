@@ -1,0 +1,88 @@
+---
+title: "Scale Construction Study #2"
+output:
+  html_document:
+    toc: true
+    theme: default
+---
+
+## (1) Description of Data Files
+
+```{r include=FALSE}
+options(width=100)
+
+library(psych)
+library(data.table)
+library(RCurl)
+
+# load data
+csv <- getURL("https://raw.githubusercontent.com/abrowman/psm-jesp2017/master/Scale%20Construction%20Study%202/SocMobility_ScaleConstruction2.csv")
+mydata <- read.csv(textConnection(csv))
+```
+
+The posted data for this study consists of 1 compiled, deidentified data file (total *N* recruited = `r nrow(mydata)`):
+
+* `r nrow(subset(mydata, !is.na(mydata$check1) | !is.na(mydata$check2) | !is.na(mydata$check3) | !is.na(mydata$check4)))` participants excluded because they failed attention checks\
+
+```{r include=FALSE}
+mydata <- subset(mydata, is.na(mydata$check1) & is.na(mydata$check2) & is.na(mydata$check3) & is.na(mydata$check4)) # remove Ps who failed attention checks
+attach(mydata)
+
+# score measures
+psm <- ((8-itss1r)+itss2+(8-itss3r)+itss4+itss5+itss6+(8-itss7r)+(8-itss8r))/8
+lti <- ((8-iti1r)+iti2+(8-iti3r)+iti4+iti5+iti6+(8-iti7r)+(8-iti8r))/8
+ltp <- ((8-gen1r)+gen2+(8-gen3r)+gen4+gen5+gen6+(8-gen7r)+(8-gen8r))/8
+```
+
+## (2) Descriptives
+
+**Total *N*:** `r nrow(mydata)`
+
+**Gender:**
+```{r echo=FALSE}
+gender <- ifelse(gender==1, "male", ifelse(gender==2, "female", NA))
+table(gender, useNA="always")
+```
+
+**Means and *SD*s:**
+```{r echo=FALSE}
+describe(data.frame(age, psm, lti, ltp))[c(2,3,4,8,9)]
+```
+
+**Alphas:**
+
+* **Perceptions of socioeconomic mobility (psm):** `r round(alpha(data.frame((8-itss1r),itss2,(8-itss3r),itss4,itss5,itss6,(8-itss7r),(8-itss8r)))$total$raw_alpha, digits=2)`  
+* **Lay theories of intelligence (lti):** `r round(alpha(data.frame((8-iti1r),iti2,(8-iti3r),iti4,iti5,iti6,(8-iti7r),(8-iti8r)))$total$raw_alpha, digits=2)`  
+* **Lay theories of personality (ltp):** `r round(alpha(data.frame((8-gen1r),gen2,(8-gen3r),gen4,gen5,gen6,(8-gen7r),(8-gen8r)))$total$raw_alpha, digits=2)`  
+
+
+## (3) Analyses
+
+### Factor analysis
+
+**Scree plot:**  
+```{r echo=FALSE}
+eigen.data <- data.frame(itss1r,itss2,itss3r,itss4,itss5,itss6,itss7r,itss8r,iti1r,iti2,iti3r,iti4,iti5,iti6,iti7r,iti8r,gen1r,gen2,gen3r,gen4,gen5,gen6,gen7r,gen8r)
+eigen <- eigen(cor(eigen.data, use="complete.obs"))
+plot(eigen$values)
+```
+
+**Eigenvalues:**
+```{r echo=FALSE}
+eigen$values
+```
+
+**Factor analysis:** Based on the scree plot and the fact that some factor correlations were high, we used a promax factor analysis with 3 factors.
+
+```{r echo=FALSE}
+promax3 <- factanal(~itss1r+itss2+itss3r+itss4+itss5+itss6+itss7r+itss8r+iti1r+iti2+iti3r+iti4+iti5+iti6+iti7r+iti8r+gen1r+gen2+gen3r+gen4+gen5+gen6+gen7r+gen8r, factors=3, rotation="promax")
+print(promax3, cutoff=0.6)
+```
+
+### Correlations
+```{r echo=FALSE}
+corlist <- data.frame(psm, lti, ltp)
+cortable <- data.frame(round(corr.test(as.matrix(corlist))$ci[,1:3], digits=2), round(corr.test(as.matrix(corlist))$ci[,4], digits=3), c(corr.test(as.matrix(corlist))$n[1,2:3], corr.test(as.matrix(corlist))$n[2,3])-2)
+colnames(cortable) <- c("lower", "r", "upper", "p", "df")
+cortable[1:2,]
+```

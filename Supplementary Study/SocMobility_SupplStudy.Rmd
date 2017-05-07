@@ -1,0 +1,333 @@
+---
+title: "Supplementary Study"
+output:
+  html_document:
+    toc: true
+    theme: default
+---
+
+## (1) Description of Data Files
+
+```{r include=FALSE}
+options(width=100)
+
+library(data.table)
+library(lm.beta)
+library(pequod)
+library(psych)
+library(rtf)
+library(RCurl)
+
+# load data
+csv <- getURL("https://raw.githubusercontent.com/abrowman/psm-jesp2017/master/Supplementary%20Study/SocMobility_SupplStudy.csv")
+mydata <- read.csv(textConnection(csv))
+```
+
+The posted data for this study consists of 1 compiled, deidentified data file (total *N* recruited = `r nrow(mydata)`):
+
+* `r nrow(subset(mydata, mydata$In.Year != "1" & mydata$In.Year != "2" & mydata$In.Year != "3" & mydata$In.Year != "4"))` participants excluded because they did not identify as undergraduate students\
+
+```{r include=FALSE}
+mydata <- subset(mydata, mydata$In.Year == "1" | mydata$In.Year == "2" | mydata$In.Year == "3" | mydata$In.Year == "4") # remove non-undergrads
+attach(mydata)
+
+# score measures
+psm <- ((8-ltss1r)+ltss2+(8-ltss3r)+ltss4+ltss5+ltss6+(8-ltss7r)+(8-ltss8r))/8
+lti <- ((7-lti1r)+lti2+(7-lti3r))/3
+pwe <- (pwe1+pwe2+(8-pwe3r)+(8-pwe4r))/4
+ladder <- 11-W5.SubSES2 # reverse-score ladder (because response options were backwards)
+income <- ifelse(!is.na(In.MHIncome), In.MHIncome+In.FHIncome, In.MIncome+In.FIncome) # income (income = combined undivorced parents' income OR combined divorced parents' income)
+income.cat <- ifelse(income<=25000, 1, ifelse(income>=25001 & income<=40000, 2, ifelse(income>=40001 & income<=70000, 3, ifelse(income>=70001 & income<=90000, 4, ifelse(income>=90001 & income<=12000, 5, ifelse(income>=12001 & income<=150000, 6, ifelse(income>=150001 & income<=200000, 7, ifelse(income>=200001 & income<=250000, 8, ifelse(income>=250001, 9, NA))))))))) # income categories (based on those used in our other studies)
+
+# center all continous IVs
+ladder_c <- scale(ladder,scale=F,center=T)
+income_c <- scale(income,scale=F,center=T)
+incomecat_c <- scale(income.cat,scale=F,center=T)
+psm_c <- scale(psm,scale=F,center=T)
+lti_c <- scale(lti,scale=F,center=T)
+pwe_c <- scale(pwe,scale=F,center=T)
+```
+
+## (2) Descriptive Statistics
+
+**Total *N*:** `r nrow(mydata)`
+
+**Percentage by gender:**
+```{r echo=FALSE}
+gender <- ifelse(In.SexElig==1, "male", ifelse(In.SexElig==2, "female", NA))
+table(gender, useNA="always")
+
+gender_c <- scale(ifelse(gender=="male", 1, ifelse(gender=="female", -1, NA)), scale=F,center=T)
+```
+
+**Percentage by race:**
+```{r echo=FALSE}
+race.count <- rowSums(cbind(In.Race.1,In.Race.2,In.Race.3,In.Race.4,In.Race.6), na.rm=TRUE)
+race <- ifelse(!is.na(In.Race.6), "asian indian", ifelse(race.count=="1" & !is.na(In.Race.1), "black", ifelse(race.count==1 & !is.na(In.Race.2), "asian", ifelse(race.count=="1" & !is.na(In.Race.3), "white", ifelse(race.count=="1" & !is.na(In.Race.4), "latino", ifelse(race.count=="2", "multi", ifelse(race.count=="0", NA, NA)))))))
+round(sort((table(race, useNA="always")/nrow(mydata))*100,decreasing=T), digits = 1)
+
+race.cat <- factor(ifelse(race=="white" | race=="asian" | race=="asian indian", "non-stigmatized", ifelse(!is.na(race), "stigmatized", NA)))
+race.cat_c <- scale(ifelse(race.cat=="non-stigmatized", 1, ifelse(race.cat=="stigmatized", -1, NA)), scale=F,center=T)
+round(sort((table(race.cat, useNA="always")/nrow(mydata))*100,decreasing=T), digits = 1)
+```
+
+**Percentage by college class:**
+```{r echo=FALSE}
+class <- ifelse(In.Year==1, "freshman", ifelse(In.Year==2, "sophomore", ifelse(In.Year==3, "junior", ifelse(In.Year==4, "senior", 4))))
+round((table(class, useNA="always")/nrow(mydata))*100, digits = 1)
+```
+
+**Percentage by income:**
+```{r echo=FALSE}
+income.label <- ifelse(income.cat==1, "(1) $25,000 or less", ifelse(income.cat==2, "(2) $25,001-$40,000", ifelse(income.cat==3, "(3) $40,001-$70,000", ifelse(income.cat==4, "(4) $70,001-$90,000", ifelse(income.cat==5, "(5) $90,001-$120,000", ifelse(income.cat==6, "(6) $120,001-$150,000", ifelse(income.cat==7, "(7) $150,001-$200,000", ifelse(income.cat==8, "(8) $200,001-$300,000", ifelse(income.cat==9, "(9) $300,001 or more", NA)))))))))
+round((table(income.label, useNA="always")/nrow(mydata))*100, digits=1)
+```
+
+***M*s and *SD*s:**
+```{r echo=FALSE}
+describe(data.frame(In.Age,ladder,psm,pwe,lti,income,income.cat,gpa))[c(2,3,4,8,9)]
+```
+
+**Alphas:**
+
+* **Perceptions of socioeconomic mobility (psm):** `r round(alpha(data.frame((8-ltss1r),ltss2,(8-ltss3r),ltss4,ltss5,ltss6,(8-ltss7r),(8-ltss8r)))$total$raw_alpha, digits=2)`  
+* **Protestant work ethic (pwe):** `r round(alpha(data.frame(pwe1,pwe2,(8-pwe3r),(8-pwe4r)))$total$raw_alpha, digits=2)`  
+* **Lay theories of intelligence (lti):** `r round(alpha(data.frame((7-lti1r),lti2,(7-lti3r)))$total$raw_alpha, digits=2)`  
+
+**Correlation between perceptions of socioeconomic mobility and Protestant work ethic:**
+```{r echo=FALSE}
+cor.test(psm, pwe)
+```
+
+**Correlation between perceptions of socioeconomic mobility and lay theories of intelligence:**
+```{r echo=FALSE}
+cor.test(psm, lti)
+```
+
+**Correlation between Protestant work ethic and lay theories of intelligence:**
+```{r echo=FALSE}
+cor.test(pwe, lti)
+```
+
+
+## (3) Main Analyses
+
+### Analyses with income and without covariates
+
+**Correlation with GPA**
+```{r echo=FALSE}
+cor.test(gpa, income.cat)
+```
+
+**Omnibus test:**
+```{r echo=FALSE}
+summary(lm.beta(lm(gpa ~ psm_c * incomecat_c)))
+```
+
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+inc.regress <- lm(gpa ~ psm_c * incomecat_c)
+inc.regress.ci <- data.frame(round(confint(inc.regress, level = 0.95), digits=2))
+colnames(inc.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+inc.regress.ci
+```
+
+**Simple slopes tests:**
+```{r echo=FALSE}
+inc.lmres <- lmres(gpa ~ psm_c * incomecat_c, mydata)
+summary(inc.ss <- simpleSlope(inc.lmres, pred="psm_c", mod1="incomecat_c"))
+```
+
+**CIs for low-income students:** `r round(inc.ss$simple_slope[1,1] + c(-1,1)*inc.ss$simple_slope[1,2]*qt(0.975, inc.ss$Df), digits=2)`  
+
+**CIs for high-income students:** `r round(inc.ss$simple_slope[2,1] + c(-1,1)*inc.ss$simple_slope[2,2]*qt(0.975, inc.ss$Df), digits=2)`
+
+**Plot:**  
+```{r echo=FALSE, warning=FALSE}
+inc.plot.points <- data.frame(c("Fixed","Malleable","Fixed","Malleable"), c("aLow-SES","aLow-SES","bHigh-SES","bHigh-SES"), c(inc.ss$Points[1,1], inc.ss$Points[1,2], inc.ss$Points[2,1], inc.ss$Points[2,2]), c(describe(gpa)$"se", describe(gpa)$"se", describe(gpa)$"se", describe(gpa)$"se"))
+colnames(inc.plot.points) <- c("ltss","ses","score","se")
+limits <- aes(ymax=score+se, ymin=score-se)
+
+loses.title <- expression(paste("Lower-SES students (-1 ", italic("SD"), ")"))
+hises.title <- expression(paste("Higher-SES students (+1 ", italic("SD"), ")"))
+lopsm.title <- expression(paste("  Weaker perceptions of mobility (-1 ", italic("SD"), ")            "))
+hipsm.title <- expression(paste("  Stronger perceptions of mobility (+1 ", italic("SD"), ")"))
+
+ggplot(inc.plot.points, aes(x=ses, y=score, fill=ltss)) +
+  geom_bar(stat="identity",position=position_dodge(width=.6), colour="black", width=.5) +
+  scale_fill_manual(values=c("gray", "white"),
+                    breaks=c("Fixed", "Malleable"),
+                    labels=c(lopsm.title, hipsm.title)) +
+  geom_errorbar(limits, position=position_dodge(width=.6), width=.1) +
+  geom_hline(yintercept=0) +
+  theme_bw(base_family = "Arial", base_size = 16) + # font and font size
+  theme(legend.position = "bottom") + # legend position
+  theme(legend.title = element_blank()) + # remove legend title
+  theme(axis.title.x = element_blank()) + # move x-axis label lower
+  theme(axis.title.y = element_text(vjust=1.3)) + # move y-axis label left
+  theme(panel.grid.minor = element_blank()) + # no grids
+  theme(panel.grid.major = element_blank()) + # no borders
+  theme(panel.border = element_blank()) + # removes default grey axis lines
+  theme(axis.line = element_line(color = 'black')) + # put axis lines back, but in black
+  coord_cartesian(ylim=c(0, 4)) + # y-axis range
+  scale_x_discrete("", labels = c("aLow-SES"=loses.title, "bHigh-SES"=hises.title)) + # x-axis titles
+  scale_y_continuous("GPA",expand = c(0, 0), breaks = seq(0, 4, by = 0.5)) # y-axis titles and range
+ggsave('Figure 1.png', width=9, height=6, unit='in', dpi=300)
+```
+
+
+### Analyses with subjective SES and without covariates
+
+**Correlation with GPA**
+```{r echo=FALSE}
+cor.test(gpa, ladder)
+```
+
+**Omnibus test:**
+```{r echo=FALSE}
+summary(lm.beta(lm(gpa ~ psm_c * ladder_c)))
+```
+
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+ldr.regress <- lm(gpa ~ psm_c * ladder_c)
+ldr.regress.ci <- data.frame(round(confint(ldr.regress, level = 0.95), digits=2))
+colnames(ldr.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+ldr.regress.ci
+```
+
+**Simple slopes tests:**
+```{r echo=FALSE}
+ldr.lmres <- lmres(gpa ~ psm_c * ladder_c, mydata)
+summary(ldr.ss <- simpleSlope(ldr.lmres, pred="psm_c", mod1="ladder_c"))
+```
+
+**CIs for low subjective SES students:** `r round(ldr.ss$simple_slope[1,1] + c(-1,1)*ldr.ss$simple_slope[1,2]*qt(0.975, ldr.ss$Df), digits=2)`  
+
+**CIs for high subjective SES students:** `r round(ldr.ss$simple_slope[2,1] + c(-1,1)*ldr.ss$simple_slope[2,2]*qt(0.975, ldr.ss$Df), digits=2)`
+
+
+### Analyses with income and covariates
+
+**Omnibus test:**
+```{r echo=FALSE}
+summary(lm.beta(lm(gpa ~ psm_c * incomecat_c + pwe_c * incomecat_c + lti_c * incomecat_c)))
+```
+
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+inc.cov.regress <- lm(gpa ~ psm_c * incomecat_c + pwe_c * incomecat_c + lti_c * incomecat_c)
+inc.cov.regress.ci <- data.frame(round(confint(inc.cov.regress, level = 0.95), digits=2))
+colnames(inc.cov.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+inc.cov.regress.ci
+```
+
+**Simple slopes tests:**
+```{r echo=FALSE}
+inc.cov.lmres <- lmres(gpa ~ psm_c * incomecat_c + pwe_c * incomecat_c + lti_c * incomecat_c, mydata)
+summary(inc.cov.ss <- simpleSlope(inc.cov.lmres, pred="psm_c", mod1="incomecat_c"))
+```
+
+**CIs for low-income students:** `r round(inc.cov.ss$simple_slope[1,1] + c(-1,1)*inc.cov.ss$simple_slope[1,2]*qt(0.975, inc.cov.ss$Df), digits=2)`  
+
+**CIs for high-income students:** `r round(inc.cov.ss$simple_slope[2,1] + c(-1,1)*inc.cov.ss$simple_slope[2,2]*qt(0.975, inc.cov.ss$Df), digits=2)`
+
+
+### Analyses with subjective SES and covariates
+
+**Omnibus test:**
+```{r echo=FALSE}
+summary(lm.beta(lm(gpa ~ psm_c * ladder_c + pwe_c * ladder_c + lti_c * ladder_c)))
+```
+
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+ldr.cov.regress <- lm(gpa ~ psm_c * ladder_c + pwe_c * ladder_c + lti_c * ladder_c)
+ldr.cov.regress.ci <- data.frame(round(confint(ldr.cov.regress, level = 0.95), digits=2))
+colnames(ldr.cov.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+ldr.cov.regress.ci
+```
+
+**Simple slopes tests:**
+```{r echo=FALSE}
+ldr.cov.lmres <- lmres(gpa ~ psm_c * ladder_c + pwe_c * ladder_c + lti_c * ladder_c, mydata)
+summary(ldr.cov.ss <- simpleSlope(ldr.cov.lmres, pred="psm_c", mod1="ladder_c"))
+```
+
+**CIs for low subjective SES students:** `r round(ldr.cov.ss$simple_slope[1,1] + c(-1,1)*ldr.cov.ss$simple_slope[1,2]*qt(0.975, ldr.cov.ss$Df), digits=2)`  
+
+**CIs for high subjective SES students:** `r round(ldr.cov.ss$simple_slope[2,1] + c(-1,1)*ldr.cov.ss$simple_slope[2,2]*qt(0.975, ldr.cov.ss$Df), digits=2)`
+
+
+```{r include=FALSE, warning=FALSE}
+## Create and export tables ##
+
+# full model sections
+regtable <- function(modellist, docname) {
+  sections <- list(NA)
+  colnam <- vector("list", length(modellist)*4)
+  for (i in 1:length(modellist)) {
+    assign(paste("b", i, sep = ""), round(coef(summary(modellist[[i]])), digits=3))
+    assign(paste("ci", i, sep = ""), paste(round(get(paste("b", i, sep=""))[, 1], digits=2), " [", round(confint(modellist[[i]], level = 0.95)[,1], digits=2), ", ", round(confint(modellist[[i]], level = 0.95)[,2], digits=2), "]", sep = ""))
+    assign(paste("t", i, sep = ""), round(summary(modellist[[i]])$coefficients[,3], digits=2))
+    assign(paste("df", i, sep = ""), rep(summary(modellist[[i]])$df[2],each=1+length(labels(modellist[[1]]))))
+    assign(paste("p", i, sep = ""), round(summary(modellist[[i]])$coefficients[,4], digits=3))
+    assign(paste("section", i, sep = ""), rbind(cbind(get(paste("ci", i, sep = "")), get(paste("t", i, sep = "")), get(paste("df", i, sep = "")), get(paste("p", i, sep = "")))))
+    sections[[i]] <- get(paste("section", i, sep = ""))
+    colnam[1+(4*(i-1))] <- paste(all.vars(summary(modellist[[i]])$call)[1], ": b (95% CIs)", sep="")
+    colnam[2+(4*(i-1))] <- "t"
+    colnam[3+(4*(i-1))] <- "df"
+    colnam[4+(4*(i-1))] <- "p"
+  }
+  complete <- do.call(cbind, sections)
+  colnames(complete) <- colnam
+  rnames <- c("Intercept")
+  for (j in 1:length(labels(modellist[[1]]))) {
+    rnames <- append(rnames, labels(modellist[[1]])[j])
+  }
+  rownames(complete) <- rnames
+  complete <- complete[-1,]
+  rtffile <- RTF(file=paste(docname, ".doc", sep=""), width=11, height=8.5, font.size=8)  # this can be an .rtf or a .doc
+  addTable(rtffile, cbind(rownames(complete), complete), col.justify="C", header.col.justify="C")
+  done(rtffile)
+}
+models1 <- list(inc.regress)
+regtable(models1, "Table 1a (omnibus)")
+models2 <- list(inc.cov.regress)
+regtable(models2, "Table 1b (omnibus)")
+models3 <- list(ldr.regress)
+regtable(models3, "Table S1a (omnibus)")
+models4 <- list(ldr.cov.regress)
+regtable(models4, "Table S1b (omnibus)")
+
+# simple slope sections
+sstable <- function(modellist, docname) {
+  sections <- list(NA)
+  colnam <- vector("list", length(modellist)*4)
+  for (i in 1:length(modellist)) {
+    assign(paste("b", i, sep = ""), round(summary(modellist[[i]])$simple_slope, digits=3))
+    assign(paste("ci", i, sep = ""), paste(round(get(paste("b", i, sep=""))[, 1], digits=2), " [", c(round(get(paste("b", i, sep=""))[1,1] + c(-1,1)*get(paste("b", i, sep=""))[1,2]*qt(0.975, modellist[[i]]$Df), digits=2)[1], round(get(paste("b", i, sep=""))[2,1] + c(-1,1)*get(paste("b", i, sep=""))[2,2]*qt(0.975, modellist[[i]]$Df), digits=2)[1]), ", ", c(round(get(paste("b", i, sep=""))[1,1] + c(-1,1)*get(paste("b", i, sep=""))[1,2]*qt(0.975, modellist[[i]]$Df), digits=2)[2], round(get(paste("b", i, sep=""))[2,1] + c(-1,1)*get(paste("b", i, sep=""))[2,2]*qt(0.975, modellist[[1]]$Df), digits=2)[2]), "]", sep = ""))
+    assign(paste("t", i, sep = ""), round(get(paste("b", i, sep=""))[,3], digits=2))
+    assign(paste("df", i, sep = ""), rep(summary(modellist[[i]])$Df,each=2))
+    assign(paste("p", i, sep = ""), round(get(paste("b", i, sep=""))[,4], digits=3))
+    assign(paste("section", i, sep = ""), rbind(cbind(get(paste("ci", i, sep = "")), get(paste("t", i, sep = "")), get(paste("df", i, sep = "")), get(paste("p", i, sep = "")))))
+    sections[[i]] <- get(paste("section", i, sep = ""))
+    colnam[1+(4*(i-1))] <- paste(modellist[[i]]$nomY, ": b (95% CIs)", sep="")
+    colnam[2+(4*(i-1))] <- "t"
+    colnam[3+(4*(i-1))] <- "df"
+    colnam[4+(4*(i-1))] <- "p"
+  }
+  complete <- do.call(cbind, sections)
+  colnames(complete) <- colnam
+  rownames(complete) <- c(row.names(summary(modellist[[i]])$Points)[1], row.names(summary(modellist[[i]])$Points)[2])
+  rtffile <- RTF(file=paste(docname, ".doc", sep=""), width=11, height=8.5, font.size=12)
+  addTable(rtffile, cbind(rownames(complete), complete), col.justify="C", header.col.justify="C")
+  done(rtffile)
+}
+models1.ss <- list(inc.ss)
+sstable(models1.ss, "Table 1 (simple slopes)")
+models2.ss <- list(ldr.ss)
+sstable(models2.ss, "Table S1 (simple slopes)")
+models3.ss <- list(inc.cov.ss, ldr.cov.ss)
+sstable(models3.ss, "Table S2 (simple slopes)")
+```
