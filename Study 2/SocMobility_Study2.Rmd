@@ -122,7 +122,7 @@ t.test(psm ~ cond, var.equal=TRUE)
 describeBy(psm,cond)
 ```
 
-**Cohen's *d*:** `r round((describeBy(psm, cond)$malleable$mean-describeBy(psm, cond)$fixed$mean)/(sqrt((describeBy(psm, cond)$malleable$sd^2+describeBy(psm, cond)$fixed$sd^2)/2)), digits=2)`  
+**Cohen's *d*:** `r round((describeBy(psm, cond)$strong$mean-describeBy(psm, cond)$weak$mean)/(sqrt((describeBy(psm, cond)$strong$sd^2+describeBy(psm, cond)$weak$sd^2)/2)), digits=2)`  
   
 
 **(b) Perceptions of mobility by condition and SES**
