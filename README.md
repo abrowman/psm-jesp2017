@@ -10,4 +10,4 @@ Despite facing daunting odds of academic success compared with their more socioe
 
 ## Citation
 
-> Browman, A. S., Destin, M., Carswell, K. L., & Svoboda, R. C. (in press). Perceptions of Socioeconomic Mobility Influence Academic Persistence among Low Socioeconomic Status Students. *Journal of Experimental Social Psychology*. doi: 10.1016/j.jesp.2017.03.006
+> Browman, A. S., Destin, M., Carswell, K. L., & Svoboda, R. C. (2017). Perceptions of Socioeconomic Mobility Influence Academic Persistence among Low Socioeconomic Status Students. *Journal of Experimental Social Psychology, 72*(9), 45-52. doi: 10.1016/j.jesp.2017.03.006
