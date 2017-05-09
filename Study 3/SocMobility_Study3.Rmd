@@ -255,7 +255,7 @@ ggplot(inc.plot.points, aes(x=ses, y=score, fill=ltss)) +
   coord_cartesian(ylim=c(1, 7)) + # y-axis range
   scale_x_discrete("", labels = c("aLow-SES"=lo.title, "bHigh-SES"=hi.title)) + # x-axis titles
   scale_y_continuous("Inclinations to persistence academically", breaks = seq(1, 7, by = 1)) # y-axis titles and range
-ggsave('Figure 3.png', width=9, height=6, unit='in', dpi=300)
+ggsave('Figure 2.png', width=9, height=6, unit='in', dpi=300)
 ```
 
 

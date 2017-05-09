@@ -94,6 +94,12 @@ describe(data.frame(In.Age,ladder,psm,pwe,lti,income,income.cat,gpa))[c(2,3,4,8,
 * **Protestant work ethic (pwe):** `r round(alpha(data.frame(pwe1,pwe2,(8-pwe3r),(8-pwe4r)))$total$raw_alpha, digits=2)`  
 * **Lay theories of intelligence (lti):** `r round(alpha(data.frame((7-lti1r),lti2,(7-lti3r)))$total$raw_alpha, digits=2)`  
 
+**Correlations between income and subjective SES:**
+```{r echo=FALSE}
+cor.test(income, ladder)
+cor.test(income.cat, ladder)
+```
+
 **Correlation between perceptions of socioeconomic mobility and Protestant work ethic:**
 ```{r echo=FALSE}
 cor.test(psm, pwe)
@@ -172,7 +178,7 @@ ggplot(inc.plot.points, aes(x=ses, y=score, fill=ltss)) +
   coord_cartesian(ylim=c(0, 4)) + # y-axis range
   scale_x_discrete("", labels = c("aLow-SES"=loses.title, "bHigh-SES"=hises.title)) + # x-axis titles
   scale_y_continuous("GPA",expand = c(0, 0), breaks = seq(0, 4, by = 0.5)) # y-axis titles and range
-ggsave('Figure 1.png', width=9, height=6, unit='in', dpi=300)
+ggsave('Figure S1.png', width=9, height=6, unit='in', dpi=300)
 ```
 
 
@@ -292,13 +298,13 @@ regtable <- function(modellist, docname) {
   done(rtffile)
 }
 models1 <- list(inc.regress)
-regtable(models1, "Table 1a (omnibus)")
+regtable(models1, "Table S2a (income omnibus)")
 models2 <- list(inc.cov.regress)
-regtable(models2, "Table 1b (omnibus)")
+regtable(models2, "Table S2a (income omnibus with covariates)")
 models3 <- list(ldr.regress)
-regtable(models3, "Table S1a (omnibus)")
+regtable(models3, "Table S2b (subjective SES omnibus)")
 models4 <- list(ldr.cov.regress)
-regtable(models4, "Table S1b (omnibus)")
+regtable(models4, "Table S2b (subjective SES omnibus with covariates)")
 
 # simple slope sections
 sstable <- function(modellist, docname) {
@@ -325,9 +331,11 @@ sstable <- function(modellist, docname) {
   done(rtffile)
 }
 models1.ss <- list(inc.ss)
-sstable(models1.ss, "Table 1 (simple slopes)")
+sstable(models1.ss, "Table S2a (income simple slopes)")
 models2.ss <- list(ldr.ss)
-sstable(models2.ss, "Table S1 (simple slopes)")
-models3.ss <- list(inc.cov.ss, ldr.cov.ss)
-sstable(models3.ss, "Table S2 (simple slopes)")
+sstable(models2.ss, "Table S2b (subjective SES simple slopes)")
+models3.ss <- list(inc.cov.ss)
+sstable(models3.ss, "Table S2a (income simple slopes with covariates)")
+models4.ss <- list(ldr.cov.ss)
+sstable(models4.ss, "Table S2b (subjective SES simple slopes with covariates)")
 ```

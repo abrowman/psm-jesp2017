@@ -86,6 +86,10 @@ table(collegetype, useNA="always")
 ***M*s and *SD*s:**
 ```{r echo=FALSE}
 describe(data.frame(psm,ldr,income,lti))[c(2,3,4,8,9)]
+```
+
+**Correlations between income and subjective SES:**
+```{r echo=FALSE}
 cor.test(income,ldr)
 ```
 
@@ -130,7 +134,7 @@ describeBy(psm,cond)
 summary(lm.beta(lm(psm ~ cond_c * income_c)))
 ```
 
-**95% confidence intervals for unstandardized and standardized regression coefficients:**
+**95% confidence intervals for unstandardized regression coefficients:**
 ```{r echo=FALSE}
 psm.regress <- lm(psm ~ cond_c * income_c)
 psm.regress.ci <- data.frame(round(confint(psm.regress, level = 0.95), digits=2))
@@ -391,15 +395,15 @@ regtable <- function(modellist, docname) {
   done(rtffile)
 }
 models1 <- list(inc.regress)
-regtable(models1, "Table 2a (omnibus)")
+regtable(models1, "Table 2a (income omnibus)")
 models2 <- list(inc.cov.regress)
-regtable(models2, "Table 2b (omnibus)")
+regtable(models2, "Table 2b (income omnibus with covariates)")
 models3 <- list(ldr.regress)
-regtable(models3, "Table S3a (omnibus)")
+regtable(models3, "Table S3a (subjective SES omnibus)")
 models4 <- list(ldr.cov.regress)
-regtable(models4, "Table S3b (omnibus)")
+regtable(models4, "Table S3b (subjective SES omnibus with covariates)")
 models5 <- list(gender.inc.regress, gender.ldr.regress)
-regtable(models5, "Table S4 (gender)")
+regtable(models5, "Table S4 (omnibus with gender)")
 
 # simple slope sections
 sstable <- function(modellist, docname) {
@@ -426,9 +430,11 @@ sstable <- function(modellist, docname) {
   done(rtffile)
 }
 models1.ss <- list(inc.ss)
-sstable(models1.ss, "Table 2 (simple slopes)")
-models2.ss <- list(ldr.ss)
-sstable(models2.ss, "Table S3 (simple slopes)")
-models3.ss <- list(inc.cov.ss, ldr.cov.ss)
-sstable(models3.ss, "Table S4 (simple slopes)")
+sstable(models1.ss, "Table 2a (income simple slopes)")
+models2.ss <- list(inc.cov.ss)
+sstable(models2.ss, "Table 2b (income simple slopes with covariates)")
+models3.ss <- list(ldr.ss)
+sstable(models3.ss, "Table S3 (subjective SES simple slopes)")
+models4.ss <- list(ldr.cov.ss)
+sstable(models4.ss, "Table S3 (subjective SES simple slopes with covariates)")
 ```

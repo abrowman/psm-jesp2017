@@ -184,6 +184,14 @@ describeBy(persist, gender)
 summary(lm.beta(psm.persist.gender <- lm(persist ~ psm_c * gender_c)))
 ```
 
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+persist.regress <- lm(persist ~ psm_c * gender_c)
+persist.regress.ci <- data.frame(round(confint(persist.regress, level = 0.95), digits=2))
+colnames(persist.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+persist.regress.ci
+```
+
 
 #### GPA analyses
 
@@ -199,6 +207,15 @@ describeBy(gpa, gender)
 summary(lm.beta(psm.gpa.gender <- lm(gpa ~ psm_c * gender_c)))
 ```
 
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+gpa.regress <- lm(gpa ~ psm_c * gender_c)
+gpa.regress.ci <- data.frame(round(confint(gpa.regress, level = 0.95), digits=2))
+colnames(gpa.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+gpa.regress.ci
+```
+
+
 **Simple effects of gender on students with strong and weak perceptions of mobility:**
 ```{r echo=FALSE}
 psm.gpa.lmres <- lmres(gpa ~ psm_c * gender_c, mydata)
@@ -213,6 +230,14 @@ summary(psm.gpa.ss <- simpleSlope(psm.gpa.lmres, pred="psm_c", mod1="gender_c"))
 **Academic persistence predicting GPA, controlling for gender:**
 ```{r echo=FALSE}
 summary(lm.beta(persist.gpa.gender <- lm(gpa ~ persist_c * gender_c)))
+```
+
+**95% confidence intervals for unstandardized regression coefficients:**
+```{r echo=FALSE}
+gpapersist.regress <- lm(gpa ~ persist_c * gender_c)
+gpapersist.regress.ci <- data.frame(round(confint(gpapersist.regress, level = 0.95), digits=2))
+colnames(gpapersist.regress.ci) <- c("Lower (estimate)", "Upper (estimate)")
+gpapersist.regress.ci
 ```
 
 
