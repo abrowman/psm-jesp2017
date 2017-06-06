@@ -6,7 +6,8 @@ Despite facing daunting odds of academic success compared with their more socioe
 
 ## Link
 
-[View pre-print PDF](http://alexbrowman.com/articles/Browman%20et%20al.,%202017,%20JESP.pdf)
+[Official article link](http://www.sciencedirect.com/science/article/pii/S0022103116305479)
+[Pre-print PDF](http://alexbrowman.com/articles/Browman%20et%20al.,%202017,%20JESP.pdf)
 
 ## Citation
 
